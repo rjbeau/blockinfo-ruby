@@ -1,0 +1,20 @@
+PATH
+  remote: .
+  specs:
+    blockinfo-ruby (0.0.1)
+      faraday (~> 0.8.8)
+      json
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    json (1.8.1)
+    multipart-post (1.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  blockinfo-ruby!
