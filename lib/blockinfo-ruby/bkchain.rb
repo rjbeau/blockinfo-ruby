@@ -11,7 +11,8 @@ module Crypto
 
     def info(currency_code, address)
       response = connection.get "#{currency_code}/api/v1/address/balance/#{address}"
-      JSON.parse response.body
+      array = JSON.parse response.body
+      array[0]
     end
 
   end
