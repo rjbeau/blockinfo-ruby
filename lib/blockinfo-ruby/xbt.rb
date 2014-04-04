@@ -1,12 +1,16 @@
 module Crypto
   class XBT
 
-    def connection
+    def initialize
       @connection = Faraday.new(url: 'https://blockchain.info') do |faraday|
         faraday.request  :url_encoded             # form-encode POST params
         # faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
+    end
+
+    def connection
+      @connection
     end
 
     def info(addr)
