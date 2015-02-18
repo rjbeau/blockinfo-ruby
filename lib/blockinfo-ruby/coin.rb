@@ -4,18 +4,16 @@ module Crypto
     def initialize
       @blockchain_connection = Faraday.new(url: 'https://blockchain.info') do |faraday|
         faraday.request  :url_encoded
-        # faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
       @bkchain_connection = Faraday.new(url: 'http://bkchain.org') do |faraday|
         faraday.request  :url_encoded             # form-encode POST params
-        # faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
     end
 
     def connection(currency)
-      return @blockchain_connection if currency.upcase == 'XBT'
+      return @blockchain_connection if %w(XBT BTC).include? currency.upcase
       @bkchain_connection
     end
 
@@ -30,7 +28,7 @@ module Crypto
 
     def info(currency, address)
       case currency
-      when 'xbt'
+      when 'xbt', 'btc'
         response = connection(currency).get blockchain_path(address)
         json = JSON.parse response.body
         {

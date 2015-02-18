@@ -1,26 +1,26 @@
 require 'faraday'
 require 'json'
 
-module BC
+module Crypto
   module FaradayMiddleware
     class RaiseHttpException < Faraday::Middleware
       def call(env)
         @app.call(env).on_complete do |response|
           case response[:status].to_i
           when 400
-            raise BC::BadRequest, error_message(response)
+            raise Crypto::BadRequest, error_message(response)
           when 401
-            raise BC::UnauthorizedAccess, "Unauthorized access."
+            raise Crypto::UnauthorizedAccess, "Unauthorized access."
           when 403
-            raise BC::ForbiddenAccess, "Access is forbidden."
+            raise Crypto::ForbiddenAccess, "Access is forbidden."
           when 404
-            raise BC::NotFound, error_message(response)
+            raise Crypto::NotFound, error_message(response)
           when 422
-            raise BC::UnprocessableEntity, error_message(response)
+            raise Crypto::UnprocessableEntity, error_message(response)
           when 500
-            raise BC::InternalServerError, error_message(response)
+            raise Crypto::InternalServerError, error_message(response)
           when 503
-            raise BC::ServiceUnavailable, "Xrate service is not available."
+            raise Crypto::ServiceUnavailable, "Xrate service is not available."
           end
         end
       end
