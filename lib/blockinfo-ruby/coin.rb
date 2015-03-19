@@ -65,8 +65,8 @@ module Crypto
         amt = 0.0
         json['data']['txs'].each { |t| amt += t['amount'].to_f }
         {
-          balance: amt.round(8),
-          txns: json['data']['nb_txs']
+          balance: (amt * 10**8).round(0),
+          txns: json['data']['nb_txs'].to_i
         }        
       when 'xdg'
         # dogechain.info doesn't supply # of txns with balance.
@@ -80,7 +80,7 @@ module Crypto
           txns = 1          
         end
         {
-          balance: amt.round(8),
+          balance: (amt * 10**8).round(0),
           txns: txns
         }        
       else
